@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+
+* {
+  font-family: "Quicksand";
+}
+
+html {
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box;
+  max-width: 100vw !important;
+  text-align: justify;
+  scroll-behavior: smooth;
+  overflow-x: scroll;
+}
+
+body, .site {
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box;
+  max-width: 100vw !important;
+  text-align: justify;
+  background-color: #ffffff;
+  font-family: 'Quicksand';
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: black;
+  text-decoration: none;
+}
+
+.tab-nav {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.tab-link {
+  background-color: #F3DFC1;
+  display: flex;
+  align-items: center;
+  height: 30px;
+  color: #7d8283;
+  border-radius: 11px;
+  margin: 3px;
+  padding-right: 10px;
+  padding-left: 10px;
+  border-bottom: 0;
+  font-size: 1em;
+}
+
+.tab-link.selected-tab:hover {
+  background-color: #5c4f80;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.tab-link:hover{
+  background-color: #DDBEA8;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.selected-tab {
+  background-color: #5c4f80;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.tab-content:not(:target) {
+  display: none;
+}
+
+.tab-content:target {
+  display: block;
+}
+
+.interactive-table{
+  text-align: center;
+}
+
+.delete-entry{
+  padding: 2px;
+}
+
+.delete-entry:hover{
+  color: white;
+  text-decoration: none;
+  background-color: rgb(228, 109, 109);
+  border-radius: 2px;
+}
+
+label {
+  display: table-cell;
+}
+
+input {
+  display: table-cell;
+}
+
+.dataTables_filter{
+  width:10vw;
+  margin: 0 20vw 0 20vw;
+}

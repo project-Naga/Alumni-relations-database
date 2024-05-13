@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="{{ url_for('static', filename='images/file.png') }}" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="description" value="Index | DBMS">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://kit.fontawesome.com/59b8e18344.js" crossorigin="anonymous"></script>
+  <title>Index | Alumni Relations</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+
+    * {
+      font-family: "Quicksand";
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background-size: cover;
+      background-position: center;
+      min-height: 100vh;
+      padding-top: 60px; 
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px;
+      background-color: rgba(240, 240, 240, 0.8);
+      z-index: 1000;
+    }
+
+    .logo img {
+      width: 60px;
+      height: 60px;
+    }
+
+    .title h1 {
+      margin: 0;
+      font-size: 25px;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 10px;
+    }
+
+    .social-links a {
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+
+    .social-links img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .site {
+      margin-left: 60vw !important;
+      padding-left: 0 !important;
+      box-sizing: border-box;
+      max-width: 100vw !important;
+      text-align: justify;
+      font-family: 'Quicksand'
+  }
+
+    .border {
+      margin: 20vh 0 15vh 0;
+      max-width: 100vw;
+      height: 45vh;
+      padding: 3vw;
+      align-items: center;
+      align-content: center;
+      border: 1px solid #236B8E;
+      border-radius: 0px;
+    }
+  </style>
+</head>
+<body style="background-image: url('{{ url_for('static', filename='images/hats.jpg') }}'); background-size: cover;">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <header>
+    <div class="logo">
+      <img src="{{ url_for('static', filename='images/file.png') }}" alt="Logo">
+    </div>
+    <div class="title">
+      <h1>Alumni Relations</h1>
+    </div>
+    <nav class="social-links">
+      <a href="https://www.facebook.com/AR.IITGN" class="facebook-icon"><img src="{{ url_for('static', filename='images/facebook-icon.webp') }}" alt="Facebook"></a>
+      <a href="https://twitter.com/alumni_iitgn" class="twitter-icon"><img src="{{ url_for('static', filename='images/twitter-icon.jpg') }}" alt="Twitter"></a>
+      <a href="https://www.instagram.com/iitgn.alumnirelations/" class="instagram-icon"><img src="{{ url_for('static', filename='images/instagram-icon.png') }}" alt="Instagram"></a>
+      <a href="https://www.linkedin.com/company/ariitgn/" class="linkedin-icon"><img src="{{ url_for('static', filename='images/linkedin-icon.webp') }}" alt="LinkedIn"></a>
+      <a href="https://www.youtube.com/channel/UCeFG6XW2oO0YAkIkEP5Py2w" class="youtube-icon"><img src="{{ url_for('static', filename='images/youtube-icon.png') }}" alt="YouTube"></a>
+    </nav>
+  </header>
+  {% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+            <!-- Modal -->
+            <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="loginModalLabel">Login Status</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ category }}">{{ message }}</div>
+                            {% endfor %}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        {% endwith %}
+<div class="site">
+  <div align="centre" class="border">
+    <div class="header">
+      <h1 class="word" >CS 432</h1>
+    <h1 class="bottom" >
+      Alumni Relations
+    </h1>
+  </div>
+    <br>
+    <div>
+      <a href="/admin-login">
+        <button type="button" class="btn btn-primary btn-lg">Admin Login</button>
+      </a>
+    </div>
+    &nbsp;
+    <div>
+      <a href="/login">
+      <button type="button" class="btn btn-primary btn-lg">Login/Sign Up</button>
+      </a>
+    </div>
+    </div>
+  </div>
+</div>
+<script>
+  $(document).ready(function() {
+      // Show modal if there are any flash messages
+      if ("{{ get_flashed_messages()|length > 0 }}") {
+          $('#loginModal').modal('show');
+      }
+  });
+</script>
+</body>
+</html>

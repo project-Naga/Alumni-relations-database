@@ -1,0 +1,290 @@
+<html>
+	<head>
+	<meta charset="utf-8" />
+    <link rel="icon" href="{{ url_for('static', filename='images/file.png') }}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" value = "Index | DBMS">
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+      integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+      crossorigin="anonymous"
+    />
+    <link rel = "stylesheet" href = "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/59b8e18344.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>  
+    <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script> 
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/bootstrap3-editable/js/bootstrap-editable.js"></script>
+    <title>Insert |Alumni Relations</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">			
+    <script>
+        function setActive(id){
+            var elements = document.getElementsByClassName('tab-link selected-tab');
+            while(elements.length > 0){
+                elements[0].classList.remove('selected-tab');
+            }
+            var ele = document.getElementById(id);
+            ele.classList.add("selected-tab");   
+        }
+        function getHash(){
+            var hash = window.location.hash.substr(1);
+            setActiveFirst(hash+'1');
+        }
+    
+        function setActiveFirst(id){
+            var ele = document.getElementById(id);
+            console.log(id);
+            ele.classList.add("selected-tab"); 
+        }
+    
+        window.onload = function(){
+            setTimeout(getHash, 1);
+        }
+    </script>
+    <style>
+        .tab-nav {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            gap: 10px;
+        }
+
+        .tab-item {
+            margin-bottom: 10px;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            padding-right: 10px;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            z-index: 1000;
+            background-color: #fff;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            min-width: 120px; /* Adjust as needed */
+            border-radius: 5px;
+        }
+
+        .dropdown-menu a {
+            color: #333;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s ease;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: #f9f9f9;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+        .dropdown-menu.show {
+            display: block;
+        }
+        .navbar {
+            height: 70px; /* Decrease header height as needed */
+        }
+
+        .navbar-nav {
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+
+        .nav-item {
+            padding: 0 10px; /* Adjust spacing as needed */
+        }
+
+        #login-link,
+        #signup-link {
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+        .interactive_table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .interactive_table th,
+        .interactive_table td {
+            text-align: center;
+            padding: 12px;
+            border: 1px solid #ccc;
+        }
+        .interactive_table thead th {
+            background-color: #368F8B;
+            color: white;
+            font-size: 1.2em;
+        }
+        .interactive_table tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .interactive_table tbody tr:hover {
+            background-color: #ddd;
+        }
+    </style>
+    <script>
+        function showPopup(f) {
+            alert(f);
+        }
+    </script>
+    
+</head>
+
+<body>
+    <nav class = "navbar navbar-expand-lg navbar-dark bg-dark">
+        <button 
+            class="navbar-toggler" 
+            type="button" 
+            data-toggle="collapse" 
+            data-target="#navbar">
+            <span class="navbar-toggler-icon"></span> 
+        </button>
+        <div class="collapse navbar-collapse" id="navbar">
+            <div class="navbar-nav">
+                {% if user.is_authenticated %}
+                    <img src="{{ url_for('static', filename='images/file.png') }}" alt="Logo" style="transform: scale(0.4);">
+                    <a class="nav-item nav-link" id="home" href="/display">Home</a>
+                    <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
+                {% else %}
+                    <a class="nav-item nav-link" id="login-link" href="/login">Login</a>
+                    <a class="nav-item nav-link" id="signup-link" href="/sign-up">Sign Up</a>
+                {% endif %}
+            </div>
+        </div>
+        
+    </nav>
+    {% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+            <!-- Modal -->
+            <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="loginModalLabel">Login Status</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ category }}">{{ message }}</div>
+                            {% endfor %}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        {% endwith %}
+    <div class="container" >
+        <ul class="tab-nav">
+            {% for key, value in tables_dict.items() %}
+            <li class="tab-item">
+                <div class="dropdown">
+                    <a href="#{{ key }}" class="tab-link dropdown-toggle" id="{{ key }}1" onclick="setActive('{{ key }}1')">{{ key }}</a>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        <br>
+        {% for key, value in tables_dict.items() %}
+            <div id="{{key}}" class="tab-content">
+                <form method="POST" action = "/insert#{{key}}">
+                    <h3 class="msg" style="color:red">{{msg}} </h3>
+                    <input  type = "text" value="{{key}}" id="keyaa" name="keyaa" style="display: none;"/>
+                    {% for column_name in value %}
+                    <div class="form-group">
+                        <label for="{{column_name}}">{{column_name}}</label>
+                        <input type="text" class="form-control" id="{{column_name}}" name="{{column_name}}" placeholder="Enter {{column_name}}"/>      
+                    </div>
+                    {% endfor %}
+                    <br />
+                    <button type="submit" class="btn btn-primary">Insert Data</button>
+                </form>
+                <br>
+                <div align="center">
+                    <table class = "interactive_table" style="text-align: center; margin-left:auto; margin-right: auto;" align="center">
+                        <thead>
+                            <tr>
+                                {% for column_name in value %}
+                                    <th style="text-align: center; font-size: 1.2em; padding: 30px; color: #fffff; border: 0.5px solid gray;">{{column_name}}</th>
+                                {% endfor %}
+                                    <th style="text-align: center; font-size: 1.2em; padding: 30px; color: #368F8B; border: 0.5px solid gray;">   </th>
+                                {% if key == 'Users' %}
+                                    <th style="text-align: center; font-size: 1.2em; padding: 30px; color: #368F8B; border: 0.5px solid gray;">   </th>
+                                {% endif %}
+                            </tr>
+                        </thead>
+                        <br>
+                        <tbody>
+                            {% for table_name, table_content in table_data.items() %}
+                                {% if table_name == key %}
+                                    {% for table_row in table_content %}
+                                        <tr>
+                                            {% for i,j in table_row.items() %}
+                                            <td style="padding: 5px; color: black; border: 0.5px solid gray;" >{{table_row[i]}}</td> 
+                                            {% endfor %}
+                                            {% set delete_end_point = {'e':''} %}
+                                            {% for i in table_row.keys()%}
+                                            {% if delete_end_point.update({'e':delete_end_point.e ~ i ~ "=" ~ table_row[i] ~ "&"}) %} {% endif %}
+                                            {% endfor %}
+                                            <td style = "padding: 5px; border: 0.5px solid gray;"><a class = "delete-entry" href="/delete/{{ table_name }}?{{ delete_end_point['e'] }}">Delete</a></td>
+                                          </tr>
+                                    {% endfor %}
+                                {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <script>
+        $(document).ready( function () {
+            $('.interactive_table').editable({
+                container:'body',
+                selector:'td.update',
+                url:'/update',
+                title:'update',
+                type:'POST',
+                validate:function(value){
+                    if($.trim(value) == '')
+                    {
+                        return 'This field is required';
+                    }
+                }
+            })
+            var dataTable = $('.interactive_table').DataTable({
+                "aLengthMenu": [[5, 10, 50, 100, 200, -1], [5, 10, 50, 100, 200, "All"]],
+                "iDisplayLengtg": 5,
+            });
+        } );
+    </script>
+    <script>
+        $(document).ready(function() {
+            // Show modal if there are any flash messages
+            if ("{{ get_flashed_messages()|length > 0 }}") {
+                $('#loginModal').modal('show');
+            }
+        });
+    </script>
+    
+	</body>
+</html>

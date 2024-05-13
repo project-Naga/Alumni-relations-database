@@ -1,0 +1,111 @@
+<html>
+	<head>
+		<meta charset="utf-8" />
+    <link rel="icon" href="{{ url_for('static', filename='images/file.png') }}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" value = "Index | DBMS">
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+      integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+      crossorigin="anonymous"
+    />
+    <link rel = "stylesheet" href = "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/59b8e18344.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>  
+    <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script> 
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/bootstrap3-editable/js/bootstrap-editable.js"></script>
+    <title>Rename | Alumni Relations</title>
+		<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+			.border{
+				margin: 20vh 25vw 20vh 25vw;
+				width: 50vw;
+				height: 50vh;
+				padding: 3vw;
+				align-items: center;
+				align-content: center;
+				border: 1px solid #236B8E;
+				border-radius: 0px;
+				background-color: lightgray;
+			}
+		</style>				
+</head>
+	<body>
+		<div class="site">
+      <nav class = "navbar navbar-expand-lg navbar-dark bg-dark">
+        <button 
+            class="navbar-toggler" 
+            type="button" 
+            data-toggle="collapse" 
+            data-target="#navbar"
+        >
+            <span class="navbar-toggler-icon"></span> 
+        </button>
+        <div class = "collapse navbar-collapse" id="navbar">
+            <div class="navbar-nav">
+                {% if user.is_authenticated %}
+                <a class="nav-item nav-link" id="home" href="/display">Home</a>
+                <a class="nav-item nav-link" id="home" href="/rename_display">Rename</a>
+                <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
+                {% else %}
+                <a class="nav-item nav-link" id="login" href="/login">Login</a>
+                <a class="nav-item nav-link" id="signUp" href="/sign-up">Sign Up</a>
+                {% endif %}
+                
+            </div>
+        </div>
+    </nav>
+    {% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+            <!-- Modal -->
+            <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="loginModalLabel">Login Status</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ category }}">{{ message }}</div>
+                            {% endfor %}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        {% endwith %}
+			<div align="center" class="border">
+				<h1>Rename Table</h1>
+				<br></br>
+				<form action="/rename/{{ key }}" method="post">
+					<div class = "msg">{{ msg }}</div>
+          <input id="name" name="name" placeholder="Enter New Name" class="form-control"/></br></br>
+					<input type="submit"  class="btn btn-primary btn-lg" value="Rename" name = "SUBMIT "></br>
+				</form>
+			</div>
+		</div>
+		</div>
+    <script>
+      $(document).ready(function() {
+          // Show modal if there are any flash messages
+          if ("{{ get_flashed_messages()|length > 0 }}") {
+              $('#loginModal').modal('show');
+          }
+      });
+  </script>
+	</body>
+</html>

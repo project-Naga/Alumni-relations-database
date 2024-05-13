@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}"-->
+        <title>Output | Alumni Relations</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+        <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>  
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css" />
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/bootstrap3-editable/js/bootstrap-editable.js"></script>
+        <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+      integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+      crossorigin="anonymous"
+    />
+    <link rel = "stylesheet" href = "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/59b8e18344.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>  
+    <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script> 
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/bootstrap3-editable/js/bootstrap-editable.js"></script>
+    <style>
+
+        .editableform .form-control {
+            width: auto;
+        }
+        .editable-click, a.editable-click, a.editable-click:hover{
+            border-bottom: dashed 0px !important;
+        }
+        table, td, th{
+            border: 1px solid #ccc;
+            color: black;
+        }
+    
+        </style>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <style>
+                .border{
+                    margin: 20vh 25vw 20vh 25vw;
+                    width: 50vw;
+                    height: 50vh;
+                    padding: 3vw;
+                    align-items: center;
+                    align-content: center;
+                    border: 1px solid #236B8E;
+                    border-radius: 0px;
+                    background-color: lightgray;
+                }
+            </style>
+    </head>
+    
+    <body>
+        <nav class = "navbar navbar-expand-lg navbar-dark bg-dark">
+            <button 
+                class="navbar-toggler" 
+                type="button" 
+                data-toggle="collapse" 
+                data-target="#navbar"
+            >
+                <span class="navbar-toggler-icon"></span> 
+            </button>
+            <div class = "collapse navbar-collapse" id="navbar">
+                <div class="navbar-nav">
+                    {% if user.is_authenticated %}
+                    <a class="nav-item nav-link" id="home" href="/display">Home</a>
+                    <a class="nav-item nav-link" id="home" href="/where_display">Where</a>
+                    <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
+                    {% else %}
+                    <a class="nav-item nav-link" id="login" href="/login">Login</a>
+                    <a class="nav-item nav-link" id="signUp" href="/sign-up">Sign Up</a>
+                    {% endif %}
+                    
+                </div>
+            </div>
+        </nav>
+        {% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+            <!-- Modal -->
+            <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="loginModalLabel">Login Status</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ category }}">{{ message }}</div>
+                            {% endfor %}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        {% endwith %}
+        <h1 style="text-align:center">{{table}}</h1>
+        <h4 style="text-align:center">{{query}}</h4>
+        <br>
+        <table class = "interactive_table" style="text-align: center; margin-left:auto; margin-right: auto;" >
+            <thead>
+                <tr>
+                    {% for column_name in cols %}
+                        <th style="text-align: center; font-family: Roboto; font-size: 1.2em; padding: 10px; color: #368F8B">{{column_name}}</th>
+                    {% endfor %}
+                </tr>
+            <thead>
+            
+            {% for table_row in userDetails %}
+            <tr>
+                {% for i in table_row.keys() %}
+                    <td style="padding: 5px; color: black;" data-name="update" class="update" data-type="text" data-pk="{{table_name}},{{table_row[0]}},{{i}}">{{table_row[i]}}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+        
+        </table>
+        <script>
+            $(document).ready(function() {
+                // Check for the 'show_flash' cookie
+                var showFlash = document.cookie.split('; ').find(row => row.startsWith('show_flash='))?.split('=')[1];
+                
+                if (showFlash === 'true') {
+                    // Show the modal if the 'show_flash' cookie is set to true
+                    $('#loginModal').modal('show');
+                }
+        
+                // When the modal is closed, clear the 'show_flash' cookie
+                $('#loginModal').on('hidden.bs.modal', function() {
+                    document.cookie = 'show_flash=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'; // Clear cookie
+                });
+            });
+        </script>
+        <script>
+            $(document).ready(function() {
+                // Show modal if there are any flash messages
+                if ("{{ get_flashed_messages()|length > 0 }}") {
+                    $('#loginModal').modal('show');
+                }
+            });
+        </script>
+    </body>
+
+</html>

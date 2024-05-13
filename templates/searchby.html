@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Custom styles */
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .container {
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-section, .search-results {
+            margin-bottom: 20px;
+        }
+
+        .filter-options {
+            display: none;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-top: 10px;
+            background-color: #f9f9f9;
+        }
+
+        .filter-options input {
+            margin-right: 10px;
+        }
+
+        .btn-filter {
+            width: 10%; /* Make button full-width */
+            margin-bottom: 10px;
+            padding: 10px; /* Increase button padding */
+            border-radius: 5px; /* Rounded corners */
+            background-color: #007bff;
+            color: white;
+            text-align: left; /* Align text to the left */
+        }
+
+        .btn-filter:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+            color: white;
+            cursor: pointer; /* Pointer cursor on hover */
+        }
+
+        .btn-filter:active {
+            background-color: #004080; /* Even darker blue when clicked */
+        }
+
+        .btn-search {
+            margin-top: 20px;
+        }
+
+        h4 {
+            margin-top: 20px;
+            color: #007bff;
+        }
+
+        /* Additional custom styling can be added as needed */
+    </style>
+    <script>
+        // Function to toggle the visibility of filter options
+        function toggleFilterOptions(filterType) {
+            var filterOptions = document.getElementById(filterType + '-options');
+            filterOptions.style.display = filterOptions.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2 class="my-4 text-center">Search</h2>
+
+        <!-- Search Section -->
+        <div class="search-section">
+            <form method="POST">
+                <!-- Direct search input -->
+                <div class="form-group">
+                    <label for="search_query">Direct Search:</label>
+                    <input type="text" class="form-control" id="search_query" name="search_query" placeholder="Search by name">
+                </div>
+
+                <!-- Search by filter options -->
+                <div class="form-group">
+                    <label for="search_by">Search By:</label><br>
+
+                    <!-- Age filter button -->
+                    <button type="button" class="btn btn-filter" onclick="toggleFilterOptions('age')">Age</button>
+                    <!-- Age filter options -->
+                    <div id="age-options" class="filter-options">
+                        <input type="checkbox" name="age_filter" value="18-25" id="age18-25">
+                        <label for="age18-25">18-25</label><br>
+
+                        <input type="checkbox" name="age_filter" value="26-35" id="age26-35">
+                        <label for="age26-35">26-35</label><br>
+
+                        <input type="checkbox" name="age_filter" value="36-45" id="age36-45">
+                        <label for="age36-45">36-45</label><br>
+
+                        <input type="checkbox" name="age_filter" value="46-55" id="age46-55">
+                        <label for="age46-55">46-55</label><br>
+
+                        <!-- Add more age options as needed -->
+                    </div>
+
+                    <!-- Add more filter buttons and options as needed -->
+                    <br><br>
+                    <button type="submit" class="btn btn-primary btn-search">Search</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Display search results -->
+        <div class="search-results">
+            <h4>Search Results:</h4>
+            {% if results %}
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Age</th>
+                            <th>Other Columns</th> <!-- Add headers for other columns as needed -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in results %}
+                            <tr>
+                                <td>{{ row.name }}</td> <!-- Replace 'name' with the appropriate column name -->
+                                <td>{{ row.age }}</td> <!-- Replace 'age' with the appropriate column name -->
+                                <td>{{ row.other_column }}</td> <!-- Replace 'other_column' with the appropriate column name -->
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>No results found.</p>
+            {% endif %}
+        </div>
+        
+    </div>
+</body>
+</html>
